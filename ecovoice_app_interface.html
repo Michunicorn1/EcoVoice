@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVoice Colombia - Community Impact Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 40px;
+            padding: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            height: 44px;
+            background: #2E7D32;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 20px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #4CAF50;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+
+        .story-info h3 {
+            font-size: 16px;
+            color: #2E7D32;
+            margin-bottom: 3px;
+        }
+
+        .story-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .story-content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .story-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #E8F5E8;
+            color: #2E7D32;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .story-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .support-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .share-btn {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+            border-radius: 0 0 32px 32px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: #4CAF50;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            background: currentColor;
+            border-radius: 4px;
+            opacity: 0.7;
+        }
+
+        .floating-btn {
+            position: absolute;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .impact-banner {
+            background: linear-gradient(135deg, #4CAF50, #81C784);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .impact-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .impact-stat {
+            text-align: center;
+        }
+
+        .impact-stat .number {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .impact-stat .label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .story-card {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="phone-screen">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            
+            <div class="header">
+                <h1>EcoVoice Colombia</h1>
+                <p>Amplifying Community Solutions 🌱</p>
+            </div>
+
+            <div class="main-content">
+                <div class="impact-banner">
+                    <h3>Our Impact This Month</h3>
+                    <div class="impact-numbers">
+                        <div class="impact-stat">
+                            <div class="number">150</div>
+                            <div class="label">Communities</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="number">$18K</div>
+                            <div class="label">Funding Secured</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="number">50K</div>
+                            <div class="label">Voices Reached</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="avatar">M</div>
+                        <div class="story-info">
+                            <h3>María Elena Rojas</h3>
+                            <p>Cundinamarca • Environmental Leader</p>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        "Our community developed a water purification system using local plants. With EcoVoice's help, we connected with international funders and now serve 500 families! 💧"
+                    </div>
+                    <div class="story-tags">
+                        <span class="tag">Water Solutions</span>
+                        <span class="tag">Indigenous Knowledge</span>
+                        <span class="tag">Rural Innovation</span>
+                    </div>
+                    <div class="story-actions">
+                        <div class="stats">
+                            <span>❤️ 234</span>
+                            <span>🔄 89</span>
+                            <span>💬 45</span>
+                        </div>
+                        <div>
+                            <button class="action-btn support-btn">Support</button>
+                            <button class="action-btn share-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="avatar">C</div>
+                        <div class="story-info">
+                            <h3>Carlos Mendoza</h3>
+                            <p>Chocó • Reforestation Activist</p>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        "We're restoring 200 hectares of rainforest using traditional methods. EcoVoice helped us share our story globally and secure $12K in funding! 🌳"
+                    </div>
+                    <div class="story-tags">
+                        <span class="tag">Reforestation</span>
+                        <span class="tag">Traditional Methods</span>
+                        <span class="tag">Biodiversity</span>
+                    </div>
+                    <div class="story-actions">
+                        <div class="stats">
+                            <span>❤️ 567</span>
+                            <span>🔄 234</span>
+                            <span>💬 123</span>
+                        </div>
+                        <div>
+                            <button class="action-btn support-btn">Support</button>
+                            <button class="action-btn share-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-header">
+                        <div class="avatar">A</div>
+                        <div class="story-info">
+                            <h3>Ana Gutiérrez</h3>
+                            <p>Bogotá • Urban Farming Pioneer</p>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        "Started vertical gardens in our neighborhood using recycled materials. Now we're teaching other communities and reducing food insecurity! 🥬"
+                    </div>
+                    <div class="story-tags">
+                        <span class="tag">Urban Agriculture</span>
+                        <span class="tag">Food Security</span>
+                        <span class="tag">Recycling</span>
+                    </div>
+                    <div class="story-actions">
+                        <div class="stats">
+                            <span>❤️ 445</span>
+                            <span>🔄 156</span>
+                            <span>💬 78</span>
+                        </div>
+                        <div>
+                            <button class="action-btn support-btn">Support</button>
+                            <button class="action-btn share-btn">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="floating-btn" title="Share Your Story">+</div>
+
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <div class="nav-icon"></div>
+                    <span>Stories</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon"></div>
+                    <span>Learn</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon"></div>
+                    <span>Connect</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon"></div>
+                    <span>Impact</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon"></div>
+                    <span>Profile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
